@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>List Patients</title>
+    </head>
+
+    <body>
+        {{ patients }}
+        
+        {% for patient in patients %}
+
+            <div>
+                <p>First Name: {{ patient.first_name }}</p>
+                <p>Last Name: {{ patient.last_name }}</p>
+                <p>Date of Birth: {{ patient.date_of_birth }}</p>
+                <p>SVNR: {{ patient.svnr }}</p>
+                <button><a href="/patients/edit/{{ patient.id }}">Edit</a></button>
+
+                <form method="post" action="/patients/delete/">
+                    {% csrf_token %}
+                    <input type="hidden" name="IdToDelete" value="{{ patient.id }}">
+                    <button>Delete</button>
+                </form>
+                
+            </div>
+
+            <hr/>
+        {% endfor %}
+            
+    </body>
+
+
+</html>

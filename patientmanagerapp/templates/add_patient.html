@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Add Patient</title>
+    </head>
+    <body>
+        <h1>Add Patient</h1>
+ 
+        <form method="post">
+            {% csrf_token %}
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required><br><br>
+ 
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required><br><br>
+ 
+            <label for="date_of_birth">Date of Birth:</label>
+            <input type="datetime-local" name="birthday" id="birthday" value="{{ patient.birthday|date:'Y-m-d\TH:i' }}" /><br><br>
+ 
+            <label for="svnr">SVNR:</label>
+            <input type="text" id="svnr" name="svnr" required><br><br>
+ 
+            <input type="submit" value="Add Patient">
+    </body>
+</html>
