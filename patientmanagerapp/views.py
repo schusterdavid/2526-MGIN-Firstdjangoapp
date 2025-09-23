@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from patientmanagerapp.models import Patient
 from datetime import datetime
+from django.contrib.auth import authenticate, login
+
 
 # Create your views here.
 def helloworld_view(request: HttpRequest):
@@ -9,6 +11,8 @@ def helloworld_view(request: HttpRequest):
 
 
 def add_patient(request: HttpRequest):
+
+
 
     if (request.method == 'POST'):
         Patient.objects.create(
@@ -50,3 +54,20 @@ def delete_patient(request: HttpRequest):
             Patient.objects.filter(id=request.POST.get('IdToDelete')).delete()
     return render(request, 'listpatients.html', context={'patients': Patient.objects.all()})
 
+
+def perform_login(request: HttpRequest):
+    login_status = " "
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        login_status = "successful" 
+
+        if user is not None:
+            login(request, user)
+        else:
+            login_status = "failed"
+
+    return render(request, "login.html", context={"login_status": login_status})
