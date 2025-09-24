@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from patientmanagerapp.models import Patient
 from datetime import datetime
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import AbstractUser
+
 
 
 # Create your views here.
@@ -14,7 +16,9 @@ def add_patient(request: HttpRequest):
 
 
 
-    if (request.method == 'POST'):
+
+
+    if (request.method == 'POST' and request.user.is_staff):
         Patient.objects.create(
             first_name = request.POST['first_name'],
             last_name = request.POST['last_name'],
@@ -35,7 +39,7 @@ def edit_patient(request: HttpRequest, id: int):
 
     patient = Patient.objects.get(id=id)
 
-    if (request.method == 'POST'):
+    if (request.method == 'POST' and request.user.is_staff):
         patient.first_name = request.POST['first_name']
         patient.last_name = request.POST['last_name']
         patient.date_of_birth = datetime.strptime(request.POST['birthday'], "%Y-%m-%dT%H:%M")
@@ -61,7 +65,7 @@ def perform_login(request: HttpRequest):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
+        user: AbstractUser | None = authenticate(request, username=username, password=password)
 
         login_status = "successful" 
 
@@ -71,3 +75,8 @@ def perform_login(request: HttpRequest):
             login_status = "failed"
 
     return render(request, "login.html", context={"login_status": login_status})
+
+
+def perform_logout(request: HttpRequest):
+    logout(request)
+    return redirect("/login/")

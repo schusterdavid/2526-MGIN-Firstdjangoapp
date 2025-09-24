@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'patientmanagerapp',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -152,3 +153,5 @@ DEBUG = bool(os.environ.get("DEBUG", default=1))
  
 ALLOWED_HOSTS = [
 ]
+
+

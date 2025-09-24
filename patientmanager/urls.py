@@ -27,5 +27,6 @@ urlpatterns = [
     path('patients/edit/<int:id>/', pmapp_views.edit_patient),
     path('patients/delete/', pmapp_views.delete_patient, name='delete_patient'),
     path('login/', pmapp_views.perform_login),
+    path('logout/', pmapp_views.perform_logout)
 ]
 

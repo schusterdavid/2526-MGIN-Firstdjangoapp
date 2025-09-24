@@ -11,6 +11,22 @@
             <span class="menubutton">
                 <a href="/add_patient/">Neue Patient hinzufügen</a>
             </span>
+
+
+            {% if user.is_authenticated %}
+            <span>
+              User:  {{ user }}
+            </span>
+            
+            <span>
+                <a href="/logout"> Logout</a>
+            </span>
+            {% else %}
+            <span>
+                <a href="/login">Login</a>
+            </span>
+            {% endif %}
+            
         </nav>
         {% block content %}
         Bitte Wählen sie eine Seite aus
