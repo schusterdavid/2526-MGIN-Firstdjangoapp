@@ -72,10 +72,35 @@ TEMPLATES = [
 WSGI_APPLICATION = 'patientmanager.wsgi.application'
 
 
+
+secrets = {
+    "AZURE_SQL_HOST=schusterdavid-django-db.database.windows.net",
+    "AZURE_SQL_USERNAME=schusterdavid",
+    "AZURE_SQL_PASSWORD=DavidS20072008s",
+    "AZURE_SQL_SERVERNAME=schusterdavid-django-db.database",
+    "AZURE_SQL_DATABASE=schusterdavid-django-db"
+
+}
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 def inferDatabaseConfig():
+
+    if "AZURE_SQL_HOST" in secrets:
+        return{
+            "ENGINE": "mssql",
+            "NAME": secrets["AZURE_SQL_DATABASE"],
+            "USER": f"{secrets["AZURE_SQL_USERNAME"]}@{secrets["AZURE_SQL_SERVERNAME"]}",
+            "PASSWORD": secrets["AZURE_SQL_PASSWORD"],
+            "HOST": secrets["AZURE_SQL_HOST"],
+            "PORT": "",
+            "OPTIONS":
+                {
+                    'driver': 'ODBC Driver 18 for SQL Server'
+                }
+        }
+
 
     if "POSTGRES_HOST" in os.environ:
         return {

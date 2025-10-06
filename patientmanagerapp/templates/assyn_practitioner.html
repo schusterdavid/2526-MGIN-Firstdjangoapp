@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+ 
+{% block content %}
+
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <br>
+        <div>
+            Assy Practitioner Dashboard
+        </div>
+        <div>
+            <select name="cars" id="cars">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select>
+        </div>
+    
+        
+    </form>
+
+    <div>
+    </div>
+
+</div>
+
+
+
+{% endblock content %}

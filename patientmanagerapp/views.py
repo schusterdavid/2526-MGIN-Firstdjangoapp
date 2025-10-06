@@ -4,7 +4,7 @@ from patientmanagerapp.models import Patient
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import AbstractUser
-
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -80,3 +80,28 @@ def perform_login(request: HttpRequest):
 def perform_logout(request: HttpRequest):
     logout(request)
     return redirect("/login/")
+
+
+def perform_register(request: HttpRequest):
+    registration_status = ""
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
+        if not username or not password:
+            registration_status = "Please fill in all required fields."
+        else:
+            from django.contrib.auth.models import User
+            if User.objects.filter(username=username).exists():
+                registration_status = "Username already exists."
+            else:
+                user = User.objects.create_user(username=username, password=password, email=email)
+                user.is_active = False  # deactivate by default
+                user.save()
+                registration_status = "Registration successful. Your account must be activated by an admin."
+    return render(request, "register.html", {"registration_status": registration_status, "username": request.POST.get('username', ''), "email": request.POST.get('email', '')})
+ 
+
+def perform_assy(request: HttpRequest):
+
+    return render(request, "assyn_practitioner.html")

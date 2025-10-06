@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+ 
+{% block content %}
+
+<div>
+    <form method="post">
+        {% csrf_token %}
+    <input type="email" name="email" placeholder="Email">
+        <input type="text" name="username" placeholder="Benutzername">
+        <input type="password" name="password" placeholder="Passwort">
+        <input type="submit">
+        
+    </form>
+
+    <div>
+        {{registration_status}}
+    </div>
+
+</div>
+
+
+
+{% endblock content %}
