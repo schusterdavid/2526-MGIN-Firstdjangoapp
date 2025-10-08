@@ -84,11 +84,11 @@ secrets = {
 
 ALLOWED_HOSTS = ["*"]
 
-def addAllowedHosts():
-    if "ALLOWED_HOST" in os.environ:
-        ALLOWED_HOSTS.append(os.environ["ALLOWED_HOST"])
+# def addAllowedHosts():
+#     if "ALLOWED_HOST" in os.environ:
+#         ALLOWED_HOSTS.append(os.environ["ALLOWED_HOST"])
 
-addAllowedHosts()
+# addAllowedHosts()
 
 
 # Database
