@@ -13,10 +13,6 @@ ENV PYTHONDONTWRITEBYTECODE=1
 #Prevents Python from buffering stdout and stderr
 ENV PYTHONUNBUFFERED=1
 
-# install odbc shared objects for azure sql to work
-RUN apt update -y
-RUN apt install unixodbc -y
-
 # Upgrade pip
 RUN pip install --upgrade pip
  
@@ -27,10 +23,13 @@ COPY requirements.txt  /app/
 RUN pip install --no-cache-dir -r requirements.txt
  
 # Copy the Django project to the container
-COPY . /app/
+COPY . .
  
 # Expose the Django port
 EXPOSE 8000
+
+RUN apt-get update -y
+RUN apt install unixodbc -y
 
 # Run Django’s development server
 CMD ["sh", "docker-entrypoint.sh"]
