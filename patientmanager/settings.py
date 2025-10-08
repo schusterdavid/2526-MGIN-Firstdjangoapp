@@ -85,8 +85,8 @@ secrets = {
 ALLOWED_HOSTS = []
 
 def addAllowedHosts():
-    if "AZURE_SQL_HOST" in os.environ:
-        ALLOWED_HOSTS.append(os.environ["ALLOWED_HOSTS"])
+    if "ALLOWED_HOST" in os.environ:
+        ALLOWED_HOSTS.append(os.environ["ALLOWED_HOST"])
 
 addAllowedHosts()
 
