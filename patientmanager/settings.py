@@ -82,7 +82,7 @@ secrets = {
 
 }
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 def addAllowedHosts():
     if "ALLOWED_HOST" in os.environ:
