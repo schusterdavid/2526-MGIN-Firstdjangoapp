@@ -38,7 +38,7 @@ def list_patients(request: HttpRequest):
 def edit_patient(request: HttpRequest, id: int):
 
     patient = Patient.objects.get(id=id)
-
+    
     if (request.method == 'POST' and request.user.is_staff):
         patient.first_name = request.POST['first_name']
         patient.last_name = request.POST['last_name']

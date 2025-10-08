@@ -82,12 +82,22 @@ secrets = {
 
 }
 
+ALLOWED_HOSTS = []
+
+def addAllowedHosts():
+    if "AZURE_SQL_HOST" in os.environ:
+        ALLOWED_HOSTS.append(os.environ["ALLOWED_HOSTS"])
+
+addAllowedHosts()
+
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 def inferDatabaseConfig():
 
     if "AZURE_SQL_HOST" in secrets:
+        print("Connection to Azure SQL")
         return{
             "ENGINE": "mssql",
             "NAME": secrets["AZURE_SQL_DATABASE"],
@@ -98,7 +108,7 @@ def inferDatabaseConfig():
             "OPTIONS":
                 {
                     'driver': 'ODBC Driver 18 for SQL Server'
-                }
+                },
         }
 
 
