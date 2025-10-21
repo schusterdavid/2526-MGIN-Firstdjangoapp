@@ -31,7 +31,7 @@ EXPOSE 8000
 RUN apt-get update -y
 RUN apt install unixodbc -y
 
-#HEALTHCHECK --interval=5m --timeout=3s CMD curl -f http://localhost:8000/ || exit 1
+HEALTHCHECK --interval=5m --timeout=3s CMD curl -f http://localhost:8000/ || exit 1
 
 # Run Django’s development server
 CMD ["sh", "docker-entrypoint.sh"]

@@ -4,10 +4,10 @@ services:
     ports:
       - "8000:8000" # portweiterleitung von host:container
     env_file: .env
-    #healthcheck:
-      #test: ["executable", "arg"]
-      #interval: 1m30s
-      #timeout: 30s
-      #retries: 5
-      #start_period: 30s
-      #start_interval: 10s
+    healthcheck:
+      test: ["executable", "arg"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+      start_interval: 10s
