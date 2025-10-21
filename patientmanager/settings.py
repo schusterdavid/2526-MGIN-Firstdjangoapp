@@ -74,13 +74,13 @@ WSGI_APPLICATION = 'patientmanager.wsgi.application'
 
 
 secrets = {
-    "AZURE_SQL_HOST=schusterdavid-django-db.database.windows.net",
-    "AZURE_SQL_USERNAME=schusterdavid",
-    "AZURE_SQL_PASSWORD=DavidS20072008s",
-    "AZURE_SQL_SERVERNAME=schusterdavid-django-db.database",
-    "AZURE_SQL_DATABASE=schusterdavid-django-db"
-
+    "AZURE_SQL_HOST": "schusterdavid-django-db.database.windows.net",
+    "AZURE_SQL_USERNAME": "schusterdavid",
+    "AZURE_SQL_PASSWORD": "DavidS20072008s",
+    "AZURE_SQL_SERVERNAME": "schusterdavid-django-db",
+    "AZURE_SQL_DATABASE": "schusterdavid-django-db"
 }
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -95,37 +95,40 @@ ALLOWED_HOSTS = ["*"]
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 def inferDatabaseConfig():
-
+    # Wenn Azure-SQL-Settings vorhanden sind
     if "AZURE_SQL_HOST" in secrets:
-        print("Connection to Azure SQL")
-        return{
+        print("Connecting to Azure SQL Database...")
+        return {
             "ENGINE": "mssql",
             "NAME": secrets["AZURE_SQL_DATABASE"],
-            "USER": f"{secrets["AZURE_SQL_USERNAME"]}@{secrets["AZURE_SQL_SERVERNAME"]}",
+            "USER": f"{secrets['AZURE_SQL_USERNAME']}@{secrets['AZURE_SQL_SERVERNAME']}",
             "PASSWORD": secrets["AZURE_SQL_PASSWORD"],
             "HOST": secrets["AZURE_SQL_HOST"],
             "PORT": "",
-            "OPTIONS":
-                {
-                    'driver': 'ODBC Driver 18 for SQL Server'
-                },
+            "OPTIONS": {
+                "driver": "ODBC Driver 18 for SQL Server",
+                "encrypt": True,
+                "trust_server_certificate": False,
+            },
         }
 
-
+    # Wenn PostgreSQL-Umgebung aktiv ist
     if "POSTGRES_HOST" in os.environ:
         return {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ["POSTGRES_DB"],
-            'USER': os.environ["POSTGRES_USER"],
-            'PASSWORD': os.environ["POSTGRES_PASSWORD"],
-            'HOST': os.environ["POSTGRES_HOST"],
-            'PORT': os.environ["POSTGRES_PORT"],
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ["POSTGRES_DB"],
+            "USER": os.environ["POSTGRES_USER"],
+            "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+            "HOST": os.environ["POSTGRES_HOST"],
+            "PORT": os.environ["POSTGRES_PORT"],
         }
 
+    # Standard-Fallback auf SQLite
     return {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
+
 
 
 DATABASES = {
